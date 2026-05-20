@@ -232,31 +232,40 @@ body{
 let isLoading=false;
 
 function mdToHtml(text){
-  // First handle bullet lists - convert lines starting with - or • 
   let lines = text.split('\n');
   let html = '';
   let inOl = false;
   let inUl = false;
   
+  function nextNonEmptyIs(startIdx, type){
+    for(let j=startIdx;j<lines.length;j++){
+      if(lines[j].trim()==='') continue;
+      if(type==='ol') return /^\d+\.\s+/.test(lines[j].trim());
+      if(type==='ul') return /^[-•]\s+/.test(lines[j].trim());
+      return false;
+    }
+    return false;
+  }
+  
   for(let i=0;i<lines.length;i++){
     let line = lines[i].trim();
     if(!line){
+      if(inOl && nextNonEmptyIs(i+1,'ol')){continue;}
+      if(inUl && nextNonEmptyIs(i+1,'ul')){continue;}
       if(inOl){html+='</ol>';inOl=false;}
       if(inUl){html+='</ul>';inUl=false;}
       html+='<br>';
       continue;
     }
-    // Bold
     line = line.replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>');
     line = line.replace(/\*(.+?)\*/g,'<em>$1</em>');
     line = line.replace(/✅/g,'<span style="color:#059669">✅</span>');
+    line = line.replace(/💡/g,'<span>💡</span>');
     
-    // Headers
-    if(line.match(/^### /)){html+='<h3>'+line.slice(4)+'</h3>';continue;}
-    if(line.match(/^## /)){html+='<h2>'+line.slice(3)+'</h2>';continue;}
-    if(line.match(/^# /)){html+='<h1>'+line.slice(2)+'</h1>';continue;}
+    if(line.match(/^### /)){if(inOl){html+='</ol>';inOl=false;}if(inUl){html+='</ul>';inUl=false;}html+='<h3>'+line.slice(4)+'</h3>';continue;}
+    if(line.match(/^## /)){if(inOl){html+='</ol>';inOl=false;}if(inUl){html+='</ul>';inUl=false;}html+='<h2>'+line.slice(3)+'</h2>';continue;}
+    if(line.match(/^# /)){if(inOl){html+='</ol>';inOl=false;}if(inUl){html+='</ul>';inUl=false;}html+='<h1>'+line.slice(2)+'</h1>';continue;}
     
-    // Ordered list
     let olMatch = line.match(/^\d+\.\s+(.+)$/);
     if(olMatch){
       if(inUl){html+='</ul>';inUl=false;}
@@ -265,7 +274,6 @@ function mdToHtml(text){
       continue;
     }
     
-    // Unordered list
     let ulMatch = line.match(/^[-•]\s+(.+)$/);
     if(ulMatch){
       if(inOl){html+='</ol>';inOl=false;}
@@ -274,7 +282,6 @@ function mdToHtml(text){
       continue;
     }
     
-    // Close any open lists
     if(inOl){html+='</ol>';inOl=false;}
     if(inUl){html+='</ul>';inUl=false;}
     
@@ -283,7 +290,6 @@ function mdToHtml(text){
   if(inOl)html+='</ol>';
   if(inUl)html+='</ul>';
   
-  // Clean trailing br
   html = html.replace(/<br>$/,'');
   return html;
 }
