@@ -24,7 +24,7 @@ body{
   display:flex;justify-content:center;align-items:center;
 }
 
-/* MOBILE FRAME - always centered */
+/* MOBILE FRAME */
 .app-frame{
   width:100%;max-width:430px;height:100vh;max-height:932px;
   background:var(--bg);display:flex;flex-direction:column;
@@ -44,43 +44,37 @@ body{
 /* HEADER */
 .header{
   background:var(--pri);
-padding:env(safe-area-inset-top,4px) 16px 14px;
+  padding:env(safe-area-inset-top,0px) 14px 10px;
   display:flex;flex-direction:column;align-items:center;
   flex-shrink:0;box-shadow:0 2px 12px rgba(4,61,233,0.2);
   position:relative;
 }
 .header-row{
   display:flex;align-items:center;justify-content:space-between;
-  width:100%;margin-top:2px;
+  width:100%;margin-top:10px;
 }
-.header-center{display:flex;align-items:center;gap:10px;position:absolute;left:50%;transform:translateX(-50%)}
+.header-center{display:flex;align-items:center;gap:8px;position:absolute;left:50%;transform:translateX(-50%)}
 .header-av{
-  width:36px;height:36px;border-radius:11px;
+  width:32px;height:32px;border-radius:10px;
   background:rgba(255,255,255,0.15);
   display:flex;align-items:center;justify-content:center;
 }
-.header h1{color:#fff;font-size:17px;font-weight:700;margin:0;white-space:nowrap}
+.header h1{color:#fff;font-size:16px;font-weight:700;margin:0;white-space:nowrap}
 .header-sub{
-  font-size:11px;color:rgba(255,255,255,0.65);
+  font-size:10px;color:rgba(255,255,255,0.6);
   display:flex;align-items:center;justify-content:center;
-  gap:5px;margin-top:4px;
+  gap:4px;margin-top:3px;
 }
-.header-dot{width:6px;height:6px;border-radius:50%;background:#34D399}
-.header-btn{
+.header-dot{width:5px;height:5px;border-radius:50%;background:#34D399}
+.hdr-btn{
   background:rgba(255,255,255,0.12);border:none;border-radius:8px;
-  padding:6px 12px;cursor:pointer;color:#fff;font-size:11px;
-  font-family:'Tajawal','Inter';font-weight:500;transition:background 0.2s;
-  z-index:2;
-}
-.header-btn:active{background:rgba(255,255,255,0.25)}
-.lang-btn{
-  background:rgba(255,255,255,0.12);border:none;border-radius:8px;
-  padding:12px 10px;cursor:pointer;color:#fff;font-size:11px;
+  min-width:54px;height:30px;
+  padding:0 12px;cursor:pointer;color:#fff;font-size:11px;
   font-family:'Inter','Tajawal';font-weight:600;transition:background 0.2s;
-  z-index:2;display:flex;align-items:center;gap:4px;
+  z-index:2;display:flex;align-items:center;justify-content:center;gap:4px;
 }
-.lang-btn:active{background:rgba(255,255,255,0.25)}
-.lang-btn svg{width:14px;height:14px}
+.hdr-btn:active{background:rgba(255,255,255,0.25)}
+.hdr-btn svg{width:13px;height:13px;flex-shrink:0}
 
 /* CHAT AREA */
 .chat-area{
@@ -195,14 +189,14 @@ padding:env(safe-area-inset-top,4px) 16px 14px;
 <!-- HEADER -->
 <div class="header">
   <div class="header-row">
-    <button class="lang-btn" id="langBtn" onclick="toggleLang()">
+    <button class="hdr-btn" id="langBtn" onclick="toggleLang()">
       <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
       <span id="langLabel">EN</span>
     </button>
     <div class="header-center">
       <h1 id="headerTitle">المساعد الذكي</h1>
       <div class="header-av">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
           <rect x="3" y="8" width="18" height="12" rx="3" fill="#fff"/>
           <circle cx="9" cy="14" r="1.5" fill="#043DE9"/>
           <circle cx="15" cy="14" r="1.5" fill="#043DE9"/>
@@ -212,7 +206,7 @@ padding:env(safe-area-inset-top,4px) 16px 14px;
         </svg>
       </div>
     </div>
-    <button class="header-btn" id="newBtn" onclick="resetChat()">جديد</button>
+    <button class="hdr-btn" id="newBtn" onclick="resetChat()">جديد</button>
   </div>
   <div class="header-sub"><div class="header-dot"></div><span id="statusText">متصل الآن</span></div>
 </div>
