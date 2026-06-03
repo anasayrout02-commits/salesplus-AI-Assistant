@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -7,7 +8,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 :root{
@@ -17,53 +18,75 @@
   --err:#FF2626;--err-bg:#FFF3F1;
   --white:#FFFFFF;--bg:#F4F6F9;
 }
-html,body{height:100%;overflow:hidden}
+html,body{height:100%;overflow:hidden;background:#E8EBF0}
 body{
-  font-family:'Tajawal',sans-serif;background:var(--bg);
-  display:flex;flex-direction:column;
+  font-family:'Tajawal','Inter',sans-serif;
+  display:flex;justify-content:center;align-items:center;
+}
+
+/* MOBILE FRAME - always centered */
+.app-frame{
+  width:100%;max-width:430px;height:100vh;max-height:932px;
+  background:var(--bg);display:flex;flex-direction:column;
+  position:relative;overflow:hidden;
+  box-shadow:0 0 40px rgba(0,0,0,0.12);
+}
+@media(min-width:500px){
+  .app-frame{
+    height:90vh;border-radius:32px;
+    box-shadow:0 8px 60px rgba(0,0,0,0.15),0 0 0 1px rgba(0,0,0,0.05);
+  }
+}
+@media(max-width:430px){
+  .app-frame{max-height:100vh;border-radius:0}
 }
 
 /* HEADER */
 .header{
   background:var(--pri);
-  padding:env(safe-area-inset-top, 12px) 20px 14px;
+  padding:env(safe-area-inset-top,12px) 16px 14px;
   display:flex;flex-direction:column;align-items:center;
   flex-shrink:0;box-shadow:0 2px 12px rgba(4,61,233,0.2);
   position:relative;
 }
-.header-top{
-  display:flex;align-items:center;justify-content:center;
-  gap:10px;margin-top:8px;
+.header-row{
+  display:flex;align-items:center;justify-content:space-between;
+  width:100%;margin-top:6px;
 }
+.header-center{display:flex;align-items:center;gap:10px;position:absolute;left:50%;transform:translateX(-50%)}
 .header-av{
   width:36px;height:36px;border-radius:11px;
   background:rgba(255,255,255,0.15);
   display:flex;align-items:center;justify-content:center;
 }
-.header h1{color:#fff;font-size:18px;font-weight:700;margin:0;text-align:center}
+.header h1{color:#fff;font-size:17px;font-weight:700;margin:0;white-space:nowrap}
 .header-sub{
   font-size:11px;color:rgba(255,255,255,0.65);
   display:flex;align-items:center;justify-content:center;
   gap:5px;margin-top:4px;
 }
 .header-dot{width:6px;height:6px;border-radius:50%;background:#34D399}
-.header-actions{
-  position:absolute;left:16px;top:50%;transform:translateY(-50%);
-  margin-top:4px;
-}
 .header-btn{
   background:rgba(255,255,255,0.12);border:none;border-radius:8px;
   padding:6px 12px;cursor:pointer;color:#fff;font-size:11px;
-  font-family:'Tajawal';font-weight:500;transition:background 0.2s;
+  font-family:'Tajawal','Inter';font-weight:500;transition:background 0.2s;
+  z-index:2;
 }
 .header-btn:active{background:rgba(255,255,255,0.25)}
+.lang-btn{
+  background:rgba(255,255,255,0.12);border:none;border-radius:8px;
+  padding:6px 10px;cursor:pointer;color:#fff;font-size:11px;
+  font-family:'Inter','Tajawal';font-weight:600;transition:background 0.2s;
+  z-index:2;display:flex;align-items:center;gap:4px;
+}
+.lang-btn:active{background:rgba(255,255,255,0.25)}
+.lang-btn svg{width:14px;height:14px}
 
 /* CHAT AREA */
 .chat-area{
   flex:1;overflow-y:auto;padding:14px 14px 8px;
   display:flex;flex-direction:column;gap:12px;
-  background:var(--bg);
-  -webkit-overflow-scrolling:touch;
+  background:var(--bg);-webkit-overflow-scrolling:touch;
 }
 
 /* WELCOME */
@@ -85,14 +108,15 @@ body{
 .sug-chip{
   background:var(--white);border:1.5px solid var(--p200);border-radius:20px;
   padding:7px 14px;font-size:11px;color:var(--pri);cursor:pointer;
-  font-family:'Tajawal';font-weight:600;transition:all 0.2s;
+  font-family:inherit;font-weight:600;transition:all 0.2s;
   box-shadow:0 1px 3px rgba(0,0,0,0.04);
 }
 .sug-chip:active{background:var(--pri);color:#fff;border-color:var(--pri)}
 
 /* MESSAGES */
 .msg-row{display:flex;gap:8px;align-items:flex-end;animation:fadeUp 0.3s ease}
-.msg-row.user{direction:rtl}
+.msg-row.user.rtl{direction:rtl}
+.msg-row.user.ltr{direction:ltr}
 .msg-row.bot{direction:ltr}
 .msg-avatar{
   width:28px;height:28px;border-radius:9px;background:var(--pri);
@@ -101,6 +125,8 @@ body{
 .msg-bubble{
   max-width:82%;padding:12px 16px;font-size:13px;line-height:1.8;
 }
+.msg-bubble.rtl{direction:rtl;text-align:right}
+.msg-bubble.ltr{direction:ltr;text-align:left}
 .msg-bubble.bot{
   background:var(--white);color:var(--p950);
   border-radius:4px 16px 16px 16px;
@@ -111,11 +137,8 @@ body{
   background:linear-gradient(135deg,var(--pri),#2563EB);color:#fff;
   border-radius:16px 4px 16px 16px;
   box-shadow:0 3px 10px rgba(4,61,233,0.2);
-  direction:rtl;text-align:right;
 }
 .msg-bubble.err{background:var(--err-bg);color:var(--err);border:1px solid #FFCCC7}
-.msg-bubble.rtl{direction:rtl;text-align:right}
-.msg-bubble.ltr{direction:ltr;text-align:left}
 .msg-bubble strong,.msg-bubble b{font-weight:700}
 .msg-bubble.rtl ol,.msg-bubble.rtl ul{margin:2px 0;padding:0 18px 0 0;direction:rtl}
 .msg-bubble.ltr ol,.msg-bubble.ltr ul{margin:2px 0;padding:0 0 0 18px;direction:ltr}
@@ -137,7 +160,7 @@ body{
 
 /* INPUT */
 .input-area{
-  padding:10px 14px calc(env(safe-area-inset-bottom, 10px) + 10px);
+  padding:10px 14px calc(env(safe-area-inset-bottom,10px) + 10px);
   background:var(--white);border-top:1px solid var(--p100);flex-shrink:0;
 }
 .input-row{
@@ -149,9 +172,8 @@ body{
 .input-row:focus-within{border-color:var(--pri)}
 .input-row input{
   flex:1;border:none;outline:none;background:transparent;
-  font-size:14px;color:var(--p950);text-align:right;
-  font-family:'Tajawal';font-weight:500;
-  height:36px;
+  font-size:14px;color:var(--p950);
+  font-family:inherit;font-weight:500;height:36px;
 }
 .input-row input::placeholder{color:var(--p400);font-weight:400}
 .send-btn{
@@ -168,25 +190,31 @@ body{
 </head>
 <body>
 
+<div class="app-frame">
+
 <!-- HEADER -->
 <div class="header">
-  <div class="header-actions">
-    <button class="header-btn" onclick="resetChat()">جديد</button>
-  </div>
-  <div class="header-top">
-    <h1>المساعد الذكي</h1>
-    <div class="header-av">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-        <rect x="3" y="8" width="18" height="12" rx="3" fill="#fff"/>
-        <circle cx="9" cy="14" r="1.5" fill="#043DE9"/>
-        <circle cx="15" cy="14" r="1.5" fill="#043DE9"/>
-        <rect x="10" y="4" width="4" height="5" rx="2" fill="#fff"/>
-        <rect x="7" y="2" width="2" height="3" rx="1" fill="#FFD60A"/>
-        <rect x="15" y="2" width="2" height="3" rx="1" fill="#FFD60A"/>
-      </svg>
+  <div class="header-row">
+    <button class="lang-btn" id="langBtn" onclick="toggleLang()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
+      <span id="langLabel">EN</span>
+    </button>
+    <div class="header-center">
+      <h1 id="headerTitle">المساعد الذكي</h1>
+      <div class="header-av">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+          <rect x="3" y="8" width="18" height="12" rx="3" fill="#fff"/>
+          <circle cx="9" cy="14" r="1.5" fill="#043DE9"/>
+          <circle cx="15" cy="14" r="1.5" fill="#043DE9"/>
+          <rect x="10" y="4" width="4" height="5" rx="2" fill="#fff"/>
+          <rect x="7" y="2" width="2" height="3" rx="1" fill="#FFD60A"/>
+          <rect x="15" y="2" width="2" height="3" rx="1" fill="#FFD60A"/>
+        </svg>
+      </div>
     </div>
+    <button class="header-btn" id="newBtn" onclick="resetChat()">جديد</button>
   </div>
-  <div class="header-sub"><div class="header-dot"></div>متصل الآن</div>
+  <div class="header-sub"><div class="header-dot"></div><span id="statusText">متصل الآن</span></div>
 </div>
 
 <!-- CHAT -->
@@ -202,16 +230,9 @@ body{
         <rect x="15" y="2" width="2" height="3" rx="1" fill="#FFD60A"/>
       </svg>
     </div>
-    <h2>مرحباً! أنا المساعد الذكي 👋</h2>
-    <p>عندك سؤال عن التطبيق؟ اسألني وبساعدك خطوة بخطوة</p>
-    <div class="suggestions">
-      <div class="sug-chip" onclick="ask('كيف أسجل الدخول؟')">كيف أسجل الدخول؟</div>
-      <div class="sug-chip" onclick="ask('كيف أنشئ طلب جديد؟')">كيف أنشئ طلب جديد؟</div>
-      <div class="sug-chip" onclick="ask('كيف أطبق خصم؟')">كيف أطبق خصم؟</div>
-      <div class="sug-chip" onclick="ask('ما هي عملية الارجاع؟')">ما هي عملية الارجاع؟</div>
-      <div class="sug-chip" onclick="ask('كيف أبدأ التسليم؟')">كيف أبدأ التسليم؟</div>
-      <div class="sug-chip" onclick="ask('كيف أتواصل مع الدعم؟')">كيف أتواصل مع الدعم؟</div>
-    </div>
+    <h2 id="welcomeTitle">مرحباً! أنا المساعد الذكي 👋</h2>
+    <p id="welcomeDesc">اسألني أي سؤال عن استخدام تطبيق سيلز بلس وسأساعدك بالخطوات</p>
+    <div class="suggestions" id="suggestions"></div>
   </div>
 </div>
 
@@ -223,13 +244,95 @@ body{
         <path d="M2 21l21-9L2 3v7l15 2-15 2v7z" fill="#94A3B8" id="sendIc"/>
       </svg>
     </button>
-    <input id="chatInput" placeholder="اكتب سؤالك هنا..." oninput="updSend()" onkeydown="if(event.key==='Enter')sendFromInput()">
+    <input id="chatInput" oninput="updSend()" onkeydown="if(event.key==='Enter')sendFromInput()">
   </div>
   <div class="input-footer">Powered by Sales<span style="color:#FFD60A;font-weight:700">+</span> AI</div>
 </div>
 
+</div>
+
 <script>
 let isLoading=false;
+let currentLang='ar';
+
+const langData={
+  ar:{
+    dir:'rtl',
+    font:"'Tajawal','Inter',sans-serif",
+    headerTitle:'المساعد الذكي',
+    newBtn:'جديد',
+    status:'متصل الآن',
+    welcomeTitle:'مرحباً! أنا المساعد الذكي 👋',
+    welcomeDesc:'اسألني أي سؤال عن استخدام تطبيق سيلز بلس وسأساعدك بالخطوات',
+    placeholder:'اكتب سؤالك هنا...',
+    langLabel:'EN',
+    suggestions:[
+      'كيف أسجل الدخول؟',
+      'كيف أنشئ طلب جديد؟',
+      'كيف أطبق خصم؟',
+      'ما هي عملية الارجاع؟',
+      'كيف أبدأ التسليم؟',
+      'كيف أتواصل مع الدعم؟'
+    ]
+  },
+  en:{
+    dir:'ltr',
+    font:"'Inter','Tajawal',sans-serif",
+    headerTitle:'Smart Assistant',
+    newBtn:'New',
+    status:'Online',
+    welcomeTitle:'Hi! I\'m your Smart Assistant 👋',
+    welcomeDesc:'Ask me any question about using the Sales+ app and I\'ll guide you step by step',
+    placeholder:'Type your question here...',
+    langLabel:'عربي',
+    suggestions:[
+      'How do I log in?',
+      'How to create a new order?',
+      'How to apply a discount?',
+      'What is the return process?',
+      'How to start delivery?',
+      'How to contact support?'
+    ]
+  }
+};
+
+function toggleLang(){
+  currentLang = currentLang==='ar'?'en':'ar';
+  applyLang();
+}
+
+function applyLang(){
+  const d=langData[currentLang];
+  document.documentElement.setAttribute('dir',d.dir);
+  document.documentElement.setAttribute('lang',currentLang);
+  document.body.style.fontFamily=d.font;
+  document.querySelector('.app-frame').style.fontFamily=d.font;
+  document.getElementById('headerTitle').textContent=d.headerTitle;
+  document.getElementById('newBtn').textContent=d.newBtn;
+  document.getElementById('statusText').textContent=d.status;
+  document.getElementById('langLabel').textContent=d.langLabel;
+  document.getElementById('chatInput').placeholder=d.placeholder;
+  document.getElementById('chatInput').style.textAlign=d.dir==='rtl'?'right':'left';
+  
+  const w=document.getElementById('welcome');
+  if(w){
+    document.getElementById('welcomeTitle').textContent=d.welcomeTitle;
+    document.getElementById('welcomeDesc').textContent=d.welcomeDesc;
+    renderSuggestions();
+  }
+}
+
+function renderSuggestions(){
+  const d=langData[currentLang];
+  const el=document.getElementById('suggestions');
+  if(!el)return;
+  el.innerHTML=d.suggestions.map(s=>'<div class="sug-chip" onclick="ask(\''+s.replace(/'/g,"\\'")+'\')">'+s+'</div>').join('');
+}
+
+function detectDir(text){
+  const arabic=/[\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF]/;
+  return arabic.test(text)?'rtl':'ltr';
+}
 
 function mdToHtml(text){
   let lines = text.split('\n');
@@ -337,20 +440,15 @@ function sendFromInput(){
   inp.value='';updSend();sendMsg(t);
 }
 
-function detectDir(text){
-  const arabic=/[\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF]/;
-  return arabic.test(text)?'rtl':'ltr';
-}
-
 function addMsg(role,content,isErr){
   const area=document.getElementById('chatArea');
   const w=document.getElementById('welcome');if(w)w.remove();
   const row=document.createElement('div');
-  row.className='msg-row '+role;
+  const dir=detectDir(content);
+  row.className='msg-row '+role+' '+dir;
   let h='';
   if(role==='bot')h+='<div class="msg-avatar"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"><rect x="3" y="8" width="18" height="12" rx="3" fill="#fff"/><circle cx="9" cy="14" r="1.5" fill="#043DE9"/><circle cx="15" cy="14" r="1.5" fill="#043DE9"/></svg></div>';
   const rendered=role==='bot'&&!isErr?mdToHtml(content):content;
-  const dir=detectDir(content);
   h+='<div class="msg-bubble '+role+(isErr?' err':'')+' '+dir+'">'+rendered+'</div>';
   row.innerHTML=h;area.appendChild(row);area.scrollTop=area.scrollHeight;
 }
@@ -365,9 +463,11 @@ function showTyping(){
 function hideTyping(){const t=document.getElementById('typing');if(t)t.remove()}
 
 function resetChat(){
-  const area=document.getElementById('chatArea');
-  area.innerHTML='<div class="welcome" id="welcome"><div class="welcome-icon"><svg width="30" height="30" viewBox="0 0 24 24" fill="none"><rect x="3" y="8" width="18" height="12" rx="3" fill="#fff"/><circle cx="9" cy="14" r="1.5" fill="#043DE9"/><circle cx="15" cy="14" r="1.5" fill="#043DE9"/><rect x="10" y="4" width="4" height="5" rx="2" fill="#fff"/><rect x="7" y="2" width="2" height="3" rx="1" fill="#FFD60A"/><rect x="15" y="2" width="2" height="3" rx="1" fill="#FFD60A"/></svg></div><h2>مرحباً! أنا المساعد الذكي 👋</h2><p>اسألني أي سؤال عن استخدام تطبيق سيلز بلس وسأساعدك بالخطوات</p><div class="suggestions"><div class="sug-chip" onclick="ask(\'كيف أسجل الدخول؟\')">كيف أسجل الدخول؟</div><div class="sug-chip" onclick="ask(\'كيف أنشئ طلب جديد؟\')">كيف أنشئ طلب جديد؟</div><div class="sug-chip" onclick="ask(\'كيف أطبق خصم؟\')">كيف أطبق خصم؟</div><div class="sug-chip" onclick="ask(\'ما هي عملية الارجاع؟\')">ما هي عملية الارجاع؟</div><div class="sug-chip" onclick="ask(\'كيف أبدأ التسليم؟\')">كيف أبدأ التسليم؟</div><div class="sug-chip" onclick="ask(\'كيف أتواصل مع الدعم؟\')">كيف أتواصل مع الدعم؟</div></div></div>';
   window._convId='';
+  const area=document.getElementById('chatArea');
+  const d=langData[currentLang];
+  area.innerHTML='<div class="welcome" id="welcome"><div class="welcome-icon"><svg width="30" height="30" viewBox="0 0 24 24" fill="none"><rect x="3" y="8" width="18" height="12" rx="3" fill="#fff"/><circle cx="9" cy="14" r="1.5" fill="#043DE9"/><circle cx="15" cy="14" r="1.5" fill="#043DE9"/><rect x="10" y="4" width="4" height="5" rx="2" fill="#fff"/><rect x="7" y="2" width="2" height="3" rx="1" fill="#FFD60A"/><rect x="15" y="2" width="2" height="3" rx="1" fill="#FFD60A"/></svg></div><h2 id="welcomeTitle">'+d.welcomeTitle+'</h2><p id="welcomeDesc">'+d.welcomeDesc+'</p><div class="suggestions" id="suggestions"></div></div>';
+  renderSuggestions();
 }
 
 async function sendMsg(text){
@@ -401,6 +501,10 @@ async function sendMsg(text){
   }catch(e){hideTyping();addMsg('bot','عذراً، لم أتمكن من الاتصال.',true)}
   isLoading=false;
 }
+
+// Initialize
+applyLang();
+renderSuggestions();
 </script>
 </body>
 </html>
