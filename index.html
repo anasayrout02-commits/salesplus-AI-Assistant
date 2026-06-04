@@ -51,7 +51,7 @@ body{
 }
 .header-row{
   display:flex;align-items:center;justify-content:space-between;
-  width:100%;margin-top:10px;
+  width:100%;margin-top:14px;
 }
 .header-center{display:flex;align-items:center;gap:8px;position:absolute;left:50%;transform:translateX(-50%)}
 .header-av{
@@ -91,7 +91,7 @@ body{
 }
 @keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
 .welcome-icon{
-  width:58px;height:58px;border-radius:50%;
+  width:58px;height:58px;border-radius:18px;
   background:linear-gradient(135deg,var(--pri),#347BFF);
   display:flex;align-items:center;justify-content:center;
   margin-bottom:12px;box-shadow:0 6px 20px rgba(4,61,233,0.25);
@@ -113,7 +113,7 @@ body{
 .msg-row.user.ltr{direction:ltr}
 .msg-row.bot{direction:ltr}
 .msg-avatar{
-  width:28px;height:28px;border-radius:50%;background:var(--pri);
+  width:28px;height:28px;border-radius:9px;background:var(--pri);
   display:flex;align-items:center;justify-content:center;flex-shrink:0;
 }
 .msg-bubble{
@@ -196,7 +196,7 @@ body{
     <div class="header-center">
       <h1 id="headerTitle">المساعد الذكي</h1>
       <div class="header-av">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
           <circle cx="12" cy="3" r="1.2" fill="#fff"/>
           <line x1="12" y1="4.2" x2="12" y2="6" stroke="#fff" stroke-width="1.3" stroke-linecap="round"/>
           <path d="M5 7.5C5 6.4 5.9 5.5 7 5.5H17C18.1 5.5 19 6.4 19 7.5V14.5C19 15.6 18.1 16.5 17 16.5H14L11 19.5V16.5H7C5.9 16.5 5 15.6 5 14.5V7.5Z" fill="#fff"/>
@@ -214,7 +214,7 @@ body{
 <div class="chat-area" id="chatArea">
   <div class="welcome" id="welcome">
     <div class="welcome-icon">
-      <svg width="34" height="34" viewBox="0 0 24 24" fill="none">
+      <svg width="30" height="30" viewBox="0 0 24 24" fill="none">
         <circle cx="12" cy="3" r="1.2" fill="#fff"/>
         <line x1="12" y1="4.2" x2="12" y2="6" stroke="#fff" stroke-width="1.3" stroke-linecap="round"/>
         <path d="M5 7.5C5 6.4 5.9 5.5 7 5.5H17C18.1 5.5 19 6.4 19 7.5V14.5C19 15.6 18.1 16.5 17 16.5H14L11 19.5V16.5H7C5.9 16.5 5 15.6 5 14.5V7.5Z" fill="#fff"/>
@@ -247,11 +247,6 @@ body{
 let isLoading=false;
 let currentLang='ar';
 
-// Robot SVG used in messages/typing
-const BOT_SVG='<svg width="14" height="14" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="3" r="1.2" fill="#fff"/><line x1="12" y1="4.2" x2="12" y2="6" stroke="#fff" stroke-width="1.3" stroke-linecap="round"/><path d="M5 7.5C5 6.4 5.9 5.5 7 5.5H17C18.1 5.5 19 6.4 19 7.5V14.5C19 15.6 18.1 16.5 17 16.5H14L11 19.5V16.5H7C5.9 16.5 5 15.6 5 14.5V7.5Z" fill="#fff"/><circle cx="9.5" cy="11" r="1.4" fill="#043DE9"/><circle cx="14.5" cy="11" r="1.4" fill="#043DE9"/></svg>';
-
-const WELCOME_SVG='<svg width="34" height="34" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="3" r="1.2" fill="#fff"/><line x1="12" y1="4.2" x2="12" y2="6" stroke="#fff" stroke-width="1.3" stroke-linecap="round"/><path d="M5 7.5C5 6.4 5.9 5.5 7 5.5H17C18.1 5.5 19 6.4 19 7.5V14.5C19 15.6 18.1 16.5 17 16.5H14L11 19.5V16.5H7C5.9 16.5 5 15.6 5 14.5V7.5Z" fill="#fff"/><circle cx="9.5" cy="11" r="1.4" fill="#043DE9"/><circle cx="14.5" cy="11" r="1.4" fill="#043DE9"/></svg>';
-
 const langData={
   ar:{
     dir:'rtl',
@@ -264,11 +259,11 @@ const langData={
     placeholder:'اكتب سؤالك هنا...',
     langLabel:'EN',
     suggestions:[
-      'كيف أسجل الدخول؟',
+      'كيف أسجل دخول؟',
       'كيف أنشئ طلب جديد؟',
-      'كيف أطبق خصم؟',
-      'ما هي عملية الارجاع؟',
-      'كيف أتواصل مع الدعم؟'
+      'ما هي خطوات طلب الخصم؟',
+      'كيف أسترجع منتج من فاتورة؟',
+      'هل يوجد تقارير في التطبيق؟',
     ]
   },
   en:{
@@ -284,9 +279,9 @@ const langData={
     suggestions:[
       'How do I log in?',
       'How to create a new order?',
-      'How to apply a discount?',
-      'What is the return process?',
-      'How to contact support?'
+      'Steps of applying discounts?',
+      'how can I create RMA?',
+      'Is there reports in the app?',
     ]
   }
 };
@@ -442,7 +437,7 @@ function addMsg(role,content,isErr){
   const dir=detectDir(content);
   row.className='msg-row '+role+' '+dir;
   let h='';
-  if(role==='bot')h+='<div class="msg-avatar">'+BOT_SVG+'</div>';
+  if(role==='bot')h+='<div class="msg-avatar"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="3" r="1.2" fill="#fff"/><line x1="12" y1="4.2" x2="12" y2="6" stroke="#fff" stroke-width="1.3" stroke-linecap="round"/><path d="M5 7.5C5 6.4 5.9 5.5 7 5.5H17C18.1 5.5 19 6.4 19 7.5V14.5C19 15.6 18.1 16.5 17 16.5H14L11 19.5V16.5H7C5.9 16.5 5 15.6 5 14.5V7.5Z" fill="#fff"/><circle cx="9.5" cy="11" r="1.4" fill="#043DE9"/><circle cx="14.5" cy="11" r="1.4" fill="#043DE9"/></svg></div>';
   const rendered=role==='bot'&&!isErr?mdToHtml(content):content;
   h+='<div class="msg-bubble '+role+(isErr?' err':'')+' '+dir+'">'+rendered+'</div>';
   row.innerHTML=h;area.appendChild(row);area.scrollTop=area.scrollHeight;
@@ -451,7 +446,7 @@ function addMsg(role,content,isErr){
 function showTyping(){
   const area=document.getElementById('chatArea');
   const row=document.createElement('div');row.className='msg-row bot';row.id='typing';
-  row.innerHTML='<div class="msg-avatar">'+BOT_SVG+'</div><div class="msg-bubble bot"><div class="typing"><span></span><span></span><span></span></div></div>';
+  row.innerHTML='<div class="msg-avatar"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="3" r="1.2" fill="#fff"/><line x1="12" y1="4.2" x2="12" y2="6" stroke="#fff" stroke-width="1.3" stroke-linecap="round"/><path d="M5 7.5C5 6.4 5.9 5.5 7 5.5H17C18.1 5.5 19 6.4 19 7.5V14.5C19 15.6 18.1 16.5 17 16.5H14L11 19.5V16.5H7C5.9 16.5 5 15.6 5 14.5V7.5Z" fill="#fff"/><circle cx="9.5" cy="11" r="1.4" fill="#043DE9"/><circle cx="14.5" cy="11" r="1.4" fill="#043DE9"/></svg></div><div class="msg-bubble bot"><div class="typing"><span></span><span></span><span></span></div></div>';
   area.appendChild(row);area.scrollTop=area.scrollHeight;
 }
 
@@ -461,7 +456,7 @@ function resetChat(){
   window._convId='';
   const area=document.getElementById('chatArea');
   const d=langData[currentLang];
-  area.innerHTML='<div class="welcome" id="welcome"><div class="welcome-icon">'+WELCOME_SVG+'</div><h2 id="welcomeTitle">'+d.welcomeTitle+'</h2><p id="welcomeDesc">'+d.welcomeDesc+'</p><div class="suggestions" id="suggestions"></div></div>';
+  area.innerHTML='<div class="welcome" id="welcome"><div class="welcome-icon"><svg width="30" height="30" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="3" r="1.2" fill="#fff"/><line x1="12" y1="4.2" x2="12" y2="6" stroke="#fff" stroke-width="1.3" stroke-linecap="round"/><path d="M5 7.5C5 6.4 5.9 5.5 7 5.5H17C18.1 5.5 19 6.4 19 7.5V14.5C19 15.6 18.1 16.5 17 16.5H14L11 19.5V16.5H7C5.9 16.5 5 15.6 5 14.5V7.5Z" fill="#fff"/><circle cx="9.5" cy="11" r="1.4" fill="#043DE9"/><circle cx="14.5" cy="11" r="1.4" fill="#043DE9"/></svg></div><h2 id="welcomeTitle">'+d.welcomeTitle+'</h2><p id="welcomeDesc">'+d.welcomeDesc+'</p><div class="suggestions" id="suggestions"></div></div>';
   renderSuggestions();
 }
 
@@ -497,6 +492,7 @@ async function sendMsg(text){
   isLoading=false;
 }
 
+// Initialize
 applyLang();
 renderSuggestions();
 </script>
